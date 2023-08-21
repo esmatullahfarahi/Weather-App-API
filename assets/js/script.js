@@ -1,19 +1,24 @@
+        // API Key
         const apiKey = '80f377adeb39dc03cb3728fe5e98893d';
+
+        // Get the necessary HTML elements
         const weatherContainer = document.getElementById('weather-info');
         const searchButton = document.getElementById('search-button');
         const cityInput = document.getElementById('city-input');
 
+        // Listen for the search button click event
         searchButton.addEventListener('click', () => {
             const city = cityInput.value;
            fetchWeatherData(city);
         });
 
-
+// Function to fetch weather data from the API
       async function fetchWeatherData(city) {
         try{
               const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
               const response = await fetch(url);
-
+      
+              // Handle 404 error
          if (response.status === 404) {
             const errorMessage = await response.json();
             weatherContainer.innerHTML = `" '${(capitalize(city))}' ${errorMessage.message}. Please enter a valid city name." `
@@ -27,6 +32,7 @@
         }
 }
 
+    // Function to render weather data on the webpage
         function renderWeatherData(data) {
 
             const weatherDetails = data.weather[0].description;
@@ -52,6 +58,7 @@
 
 }
 
+// Function to capitalize the first letter of a string
 function capitalize(s)
 {
     return s[0].toUpperCase() + s.slice(1);
